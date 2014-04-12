@@ -1,6 +1,81 @@
 parameters:
-    im0rtality_cold_breeze.aggregator.class: Im0rtality\ColdBreezeBundle\Aggregator
+    im0rtality_cold_breeze.serializer.class: Im0rtality\ColdBreezeBundle\Serializer
+    im0rtality_cold_breeze.listener.exception.class: Im0rtality\ColdBreezeBundle\ExceptionListener
+    im0rtality_cold_breeze.resource_repository.mapping:
+        orders: order
+        users: user
+        products: product
+        variants: product_variant
+
+    im0rtality_cold_breeze.resources_fields.mapping:
+        Order:
+            - id
+            - user
+            - shippingAddress
+            - billingAddress
+            - currency
+            - paymentState
+            - shippingState
+            - number
+            - total
+            - state
+            - createdAt
+            - updatedAt
+            - completedAt
+        User:
+            - id
+            - firstName
+            - lastName
+            - username
+            - email
+            - roles
+            - orders
+        Address:
+            - id
+            - firstName
+            - lastName
+            - company
+            - country
+            - province
+            - street
+            - city
+            - postcode
+            - createdAt
+            - updatedAt
+        Product:
+            - id
+            - slug
+            - name
+            - shortDescription
+            - availableOn
+            - variants
+            - images
+        ProductVariant:
+            - id
+            - sku
+            - images
+            - price
+            - onHold
+            - onHand
+        ProductVariantImage:
+            - id
+            - path
+
+    im0rtality_cold_breeze.virtual_fields.list:
+        Product:
+            variants: getVariants
+        ProductVariant:
+            images: getImages
 
 services:
-    im0rtality_cold_breeze.aggregator:
-        class: %im0rtality_cold_breeze.aggregator.class%
+    im0rtality_cold_breeze.listener.exception:
+        class: %im0rtality_cold_breeze.listener.exception.class%
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException, priority: 100 }
+        calls:
+            - [setDebug, [%kernel.debug%]]
+
+    im0rtality_cold_breeze.serializer:
+        class: %im0rtality_cold_breeze.serializer.class%
+        calls:
+            - [setMapping, [%im0rtality_cold_breeze.resources_fields.mapping%]]

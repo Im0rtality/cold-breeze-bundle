@@ -1,7 +1,17 @@
-im0rtality_cold_breeze.homepage:
-    path:  /coldbreeze/report
+im0rtality_cold_breeze.rest.index:
+    path:  /{resource}
     defaults:
-        _controller: Im0rtalityColdBreezeBundle:Report:read
+        _controller: Im0rtalityColdBreezeBundle:Rest:list
         _format: json
+    methods: [GET]
     requirements:
-        method: [GET]
+        resource: (orders|users|products)
+
+im0rtality_cold_breeze.rest.get:
+    path:  /{resource}/{id}
+    defaults:
+        _controller: Im0rtalityColdBreezeBundle:Rest:get
+        _format: json
+    methods: [GET]
+    requirements:
+        resource: (orders|users|products)
