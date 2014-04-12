@@ -1,0 +1,6 @@
+parameters:
+    im0rtality_cold_breeze.aggregator.class: Im0rtality\ColdBreezeBundle\Aggregator
+
+services:
+    im0rtality_cold_breeze.aggregator:
+        class: %im0rtality_cold_breeze.aggregator.class%

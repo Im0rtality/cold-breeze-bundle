@@ -1,0 +1,7 @@
+im0rtality_cold_breeze.homepage:
+    path:  /coldbreeze/report
+    defaults:
+        _controller: Im0rtalityColdBreezeBundle:Report:read
+        _format: json
+    requirements:
+        method: [GET]
