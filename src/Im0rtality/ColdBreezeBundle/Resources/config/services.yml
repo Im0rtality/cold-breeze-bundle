@@ -5,7 +5,6 @@ parameters:
         orders: order
         users: user
         products: product
-        variants: product_variant
 
     im0rtality_cold_breeze.resources_fields.mapping:
         Order:
@@ -60,12 +59,6 @@ parameters:
         ProductVariantImage:
             - id
             - path
-
-    im0rtality_cold_breeze.virtual_fields.list:
-        Product:
-            variants: getVariants
-        ProductVariant:
-            images: getImages
 
 services:
     im0rtality_cold_breeze.listener.exception:
