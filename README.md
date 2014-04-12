@@ -6,7 +6,7 @@ Sylius integration bundle for Cold Breeze app
 
 Add dependency:
 
-    $ composer require im0rtality:coldbreeze:dev-master
+    $ composer require im0rtality/coldbreeze:dev-master
 
 Register bundle in `app/AppKernel.php`:
 
