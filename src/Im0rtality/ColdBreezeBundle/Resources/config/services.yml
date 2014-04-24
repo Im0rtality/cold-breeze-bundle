@@ -40,12 +40,14 @@ parameters:
                 - lastName
                 - company
                 - country
-                - province
                 - street
                 - city
                 - postcode
-                - createdAt
-                - updatedAt
+            expand:
+                - country
+        Country:
+            fields:
+                - name
             expand: []
         Product:
             fields:
