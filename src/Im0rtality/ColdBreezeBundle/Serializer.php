@@ -64,7 +64,10 @@ class Serializer
      */
     private function serializeInstance($object)
     {
-        $fields = $this->mapping[current(array_reverse(explode('\\', get_class($object))))];
+        $fields = $this->mapping[current(array_reverse(explode('\\', get_class($object))))]['fields'];
+        $expand = $this->mapping[current(array_reverse(explode('\\', get_class($object))))]['expand'];
+
+        $expand += $this->expands;
 
         $output = array_flip($fields);
         foreach ($fields as $field) {
@@ -73,7 +76,7 @@ class Serializer
             if ($value instanceof \DateTime) {
                 $output[$field] = $value->format('c');
             } elseif ($value instanceof Collection) {
-                if (in_array($field, $this->expands)) {
+                if (in_array($field, $expand)) {
                     $output[$field] = $this->serializeCollection($value);
                 } else {
                     $output[$field] = $value
@@ -85,7 +88,7 @@ class Serializer
                         ->toArray();
                 }
             } elseif (is_object($value)) {
-                if (in_array($field, $this->expands)) {
+                if (in_array($field, $expand)) {
                     $output[$field] = $this->serialize($value);
                 } else {
                     $output[$field] = $value->{'getId'}();

@@ -8,57 +8,58 @@ parameters:
 
     im0rtality_cold_breeze.resources_fields.mapping:
         Order:
-            - id
-            - user
-            - shippingAddress
-            - billingAddress
-            - currency
-            - paymentState
-            - shippingState
-            - number
-            - total
-            - state
-            - createdAt
-            - updatedAt
-            - completedAt
+            fields:
+                - id
+                - user
+                - shippingAddress
+                - billingAddress
+                - currency
+                - paymentState
+                - shippingState
+                - number
+                - total
+                - state
+                - createdAt
+                - updatedAt
+                - completedAt
+            expand:
+                - shippingAddress
+                - billingAddress
         User:
-            - id
-            - firstName
-            - lastName
-            - username
-            - email
-            - roles
-            - orders
+            fields:
+                - id
+                - firstName
+                - lastName
+                - username
+                - email
+                - orders
+            expand: []
         Address:
-            - id
-            - firstName
-            - lastName
-            - company
-            - country
-            - province
-            - street
-            - city
-            - postcode
-            - createdAt
-            - updatedAt
+            fields:
+                - firstName
+                - lastName
+                - company
+                - country
+                - province
+                - street
+                - city
+                - postcode
+                - createdAt
+                - updatedAt
+            expand: []
         Product:
-            - id
-            - slug
-            - name
-            - shortDescription
-            - availableOn
-            - variants
-            - images
-        ProductVariant:
-            - id
-            - sku
-            - images
-            - price
-            - onHold
-            - onHand
+            fields:
+                - id
+                - slug
+                - name
+                - shortDescription
+                - images
+            expand:
+                - images
         ProductVariantImage:
-            - id
-            - path
+            fields:
+                - path
+            expand: []
 
 services:
     im0rtality_cold_breeze.listener.exception:
