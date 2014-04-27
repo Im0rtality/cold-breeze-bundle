@@ -36,7 +36,7 @@ class Serializer
      */
     public function serialize($object)
     {
-        if ($object instanceof Collection) {
+        if ((is_array($object)) || ($object instanceof Collection)) {
             return $this->serializeCollection($object);
         } else {
             return $this->serializeInstance($object);

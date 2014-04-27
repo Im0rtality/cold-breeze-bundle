@@ -11,8 +11,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class RestController extends Controller
 {
     /**
-     * @param Request    $request
-     * @param string     $resource
+     * @param Request $request
+     * @param string $resource
      * @param string|int $id
      * @return JsonResponse
      * @throws NotFoundHttpException
@@ -47,7 +47,11 @@ class RestController extends Controller
         $serializer = $this->get('im0rtality_cold_breeze.serializer');
         $serializer->setExpands($this->getExpands($request));
 
-        return new JsonResponse($serializer->serialize($repository->findAll()));
+        return new JsonResponse(
+            $serializer->serialize(
+                $repository->findBy([], null, $request->request->get('limit', 10), $request->request->get('offset', 0))
+            )
+        );
     }
 
     /**
