@@ -49,7 +49,7 @@ class RestController extends Controller
 
         return new JsonResponse(
             $serializer->serialize(
-                $repository->findBy([], null, $request->request->get('limit', 10), $request->request->get('offset', 0))
+                $repository->findBy([], null, $request->query->get('limit', 10), $request->query->get('offset', 0))
             )
         );
     }
