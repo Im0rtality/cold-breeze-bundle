@@ -75,3 +75,9 @@ services:
         class: %im0rtality_cold_breeze.serializer.class%
         calls:
             - [setMapping, [%im0rtality_cold_breeze.resources_fields.mapping%]]
+
+    im0rtality_cold_breeze.helper.settings:
+        class: Im0rtality\ColdBreezeBundle\Helper\Settings
+        calls:
+            - [setImagineFilters, [%liip_imagine.filter_sets%]]
+            - [setImagineCacheManager, [@liip_imagine.cache.manager]]

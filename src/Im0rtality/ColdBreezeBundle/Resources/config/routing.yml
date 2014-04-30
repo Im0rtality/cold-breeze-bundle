@@ -15,3 +15,10 @@ im0rtality_cold_breeze.rest.get:
     methods: [GET]
     requirements:
         resource: (orders|users|products)
+
+im0rtality_cold_breeze.rest.settings:
+    path:  /settings
+    defaults:
+        _controller: Im0rtalityColdBreezeBundle:Rest:settings
+        _format: json
+    methods: [GET]

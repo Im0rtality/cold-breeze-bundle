@@ -2,6 +2,7 @@
 
 namespace Im0rtality\ColdBreezeBundle\Controller;
 
+use Im0rtality\ColdBreezeBundle\Helper\Settings;
 use Im0rtality\ColdBreezeBundle\Serializer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -11,8 +12,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class RestController extends Controller
 {
     /**
-     * @param Request $request
-     * @param string $resource
+     * @param Request    $request
+     * @param string     $resource
      * @param string|int $id
      * @return JsonResponse
      * @throws NotFoundHttpException
@@ -52,6 +53,16 @@ class RestController extends Controller
                 $repository->findBy([], null, $request->query->get('limit', 10), $request->query->get('offset', 0))
             )
         );
+    }
+
+    public function settingsAction()
+    {
+        /** @var Settings $helper */
+        $helper = $this->get('im0rtality_cold_breeze.helper.settings');
+        $data   = [
+            'imagine' => $helper->getImagineSettings(),
+        ];
+        return new JsonResponse($data);
     }
 
     /**
