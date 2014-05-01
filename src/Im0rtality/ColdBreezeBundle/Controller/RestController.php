@@ -3,6 +3,7 @@
 namespace Im0rtality\ColdBreezeBundle\Controller;
 
 use Im0rtality\ColdBreezeBundle\Helper\Settings;
+use Im0rtality\ColdBreezeBundle\Helper\Version;
 use Im0rtality\ColdBreezeBundle\Serializer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -63,6 +64,13 @@ class RestController extends Controller
             'imagine' => $helper->getImagineSettings(),
         ];
         return new JsonResponse($data);
+    }
+
+    public function versionAction()
+    {
+        /** @var Version $helper */
+        $helper = $this->get('im0rtality_cold_breeze.helper.version');
+        return new JsonResponse(['version' => $helper->getVersion()]);
     }
 
     /**
