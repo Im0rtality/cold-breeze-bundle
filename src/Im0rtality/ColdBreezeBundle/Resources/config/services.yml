@@ -52,15 +52,36 @@ parameters:
         Product:
             fields:
                 - id
-                - slug
+                - sku
                 - name
                 - shortDescription
                 - images
+                - masterVariant
+                - variants
             expand:
                 - images
+                - variants
+                - masterVariant
         ProductVariantImage:
             fields:
                 - path
+            expand: []
+        ProductVariant:
+            fields:
+                - id
+                - price
+                - onHold
+                - onHand
+                - availableOnDemand
+                - availableOn
+                - available
+                - options
+            expand:
+                - options
+        OptionValue:
+            fields:
+                - value
+                - name
             expand: []
 
 services:
