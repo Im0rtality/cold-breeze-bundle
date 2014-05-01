@@ -28,7 +28,7 @@ class RestController extends Controller
 
         $instance = $repository->find($id);
         if (null === $instance) {
-            throw new NotFoundHttpException(sprintf('%s could not be found', ucfirst($resourceType)));
+            throw new NotFoundHttpException('Resource could not be found');
         }
         return new JsonResponse(
             $serializer->serialize($instance)
