@@ -72,6 +72,9 @@ class Serializer
         $output = array_flip($fields);
         foreach ($fields as $field) {
             $getter = sprintf('get%s', ucfirst($field));
+            if (!is_callable([$object, $getter])) {
+                $getter = sprintf('is%s', ucfirst($field));
+            }
             $value  = $object->{$getter}();
             if ($value instanceof \DateTime) {
                 $output[$field] = $value->format('c');
