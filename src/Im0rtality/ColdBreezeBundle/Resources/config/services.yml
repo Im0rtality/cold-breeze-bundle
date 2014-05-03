@@ -111,6 +111,8 @@ services:
         arguments:
             - @fos_user.user_manager
             - []
+        calls:
+            - [setEntityManager, [@doctrine.orm.default_entity_manager]]
 
     im0rtality_cold_breeze.authenticator:
         class:     Im0rtality\ColdBreezeBundle\Security\Authenticator

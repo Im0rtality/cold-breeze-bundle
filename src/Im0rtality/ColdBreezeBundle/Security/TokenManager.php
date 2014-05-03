@@ -42,7 +42,6 @@ class TokenManager
      */
     public function setEntityManager($em)
     {
-        var_dump('set em');
         $this->em = $em;
     }
 }
