@@ -23,7 +23,7 @@ class Settings
     /**
      * @param CacheManager $imagineCacheManager
      */
-    public function setImagineCacheManager($imagineCacheManager)
+    public function setImagineCacheManager(CacheManager $imagineCacheManager)
     {
         $this->imagineCacheManager = $imagineCacheManager;
     }
