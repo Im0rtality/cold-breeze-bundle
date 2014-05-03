@@ -58,13 +58,13 @@ class Authenticator implements SimplePreAuthenticatorInterface, AuthenticationFa
             return new PreAuthenticatedToken(self::TOKEN_NAME_PUBLIC, null, $providerKey);
         }
 
-        if (!$request->query->has('token')) {
+        if (!$request->headers->has('Token')) {
             throw new BadCredentialsException('No token found');
         }
 
         return new PreAuthenticatedToken(
             'anon.',
-            $request->query->get('token'),
+            $request->headers->get('Token'),
             $providerKey
         );
     }
