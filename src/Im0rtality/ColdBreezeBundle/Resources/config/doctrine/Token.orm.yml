@@ -10,6 +10,8 @@ Im0rtality\ColdBreezeBundle\Entity\Token:
         value:
             type: string
             length: 32
+        shown:
+            type: boolean
     manyToOne:
         user:
             targetEntity: \Sylius\Component\Core\Model\User

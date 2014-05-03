@@ -9,7 +9,6 @@ use Sylius\Component\Core\Model\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\EncoderFactory;
@@ -50,8 +49,6 @@ class RestController extends Controller
      */
     public function getAction(Request $request, $resource, $id)
     {
-        $this->checkAuth($request);
-
         $repository = $this->getRepository($resource);
 
         /** @var Serializer $serializer */
@@ -102,6 +99,13 @@ class RestController extends Controller
         /** @var Version $helper */
         $helper = $this->get('im0rtality_cold_breeze.helper.version');
         return new JsonResponse(['version' => $helper->getVersion()]);
+    }
+
+    public function tokenAction(Request $request)
+    {
+        $user  = $this->get('sylius.repository.user')->findOneBy(['usernameCanonical' => $request->query->get('u')]);
+        $token = $this->get('im0rtality_cold_breeze.token_manager')->retrieveTokenForUser($user);
+        return new JsonResponse(['token' => $token]);
     }
 
     /**

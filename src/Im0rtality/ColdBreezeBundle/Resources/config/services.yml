@@ -118,6 +118,7 @@ services:
         class:     Im0rtality\ColdBreezeBundle\Security\Authenticator
         arguments:
             - @im0rtality_cold_breeze.user_provider
+            - @security.http_utils
 
     im0rtality_cold_breeze.token_manager:
         class:     Im0rtality\ColdBreezeBundle\Security\TokenManager

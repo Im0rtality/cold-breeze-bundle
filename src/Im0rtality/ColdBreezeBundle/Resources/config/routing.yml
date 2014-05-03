@@ -29,3 +29,10 @@ im0rtality_cold_breeze.rest.version:
         _controller: Im0rtalityColdBreezeBundle:Rest:version
         _format: json
     methods: [GET]
+
+im0rtality_cold_breeze.rest.token:
+    path:  /token
+    defaults:
+        _controller: Im0rtalityColdBreezeBundle:Rest:token
+        _format: json
+    methods: [GET]

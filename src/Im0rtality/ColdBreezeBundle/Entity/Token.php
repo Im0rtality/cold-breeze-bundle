@@ -13,6 +13,8 @@ class Token
     protected $value;
     /** @var  User */
     protected $user;
+    /** @var  boolean */
+    protected $shown = false;
 
     /**
      * @return int
@@ -54,5 +56,19 @@ class Token
         $this->value = $value;
     }
 
+    /**
+     * @return boolean
+     */
+    public function isShown()
+    {
+        return $this->shown;
+    }
 
+    /**
+     * @param boolean $shown
+     */
+    public function setShown($shown)
+    {
+        $this->shown = $shown;
+    }
 }
