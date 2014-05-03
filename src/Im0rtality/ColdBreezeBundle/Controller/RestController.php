@@ -125,25 +125,4 @@ class RestController extends Controller
         $expand = explode(',', $request->get('expand', ''));
         return $expand;
     }
-
-    private function checkAuth(Request $request)
-    {
-        $auth = $request->headers->get('Authenticate', null);
-        if (!$auth) {
-            throw new HttpException(403);
-        }
-        list($username, $password) = explode(':', base64_decode($auth));
-        $um   = $this->getUserManager();
-        $user = $um->findUserByUsername($username);
-        if (!$user) {
-            $user = $um->findUserByEmail($username);
-        }
-
-        if (!$user instanceof User) {
-            throw new HttpException(403, "User not found");
-        }
-        if (!$this->checkUserPassword($user, $password)) {
-            throw new HttpException(403, "Wrong password");
-        }
-    }
 } 
