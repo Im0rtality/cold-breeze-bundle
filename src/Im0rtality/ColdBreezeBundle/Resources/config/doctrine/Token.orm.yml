@@ -1,0 +1,15 @@
+Im0rtality\ColdBreezeBundle\Entity\Token:
+    type: entity
+    table: coldbreeze_tokens
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        value:
+            type: string
+            length: 32
+    manyToOne:
+        user:
+            targetEntity: \Sylius\Component\Core\Model\User

@@ -105,3 +105,19 @@ services:
 
     im0rtality_cold_breeze.helper.version:
         class: Im0rtality\ColdBreezeBundle\Helper\Version
+
+    im0rtality_cold_breeze.user_provider:
+        class:     Im0rtality\ColdBreezeBundle\Security\UserProvider
+        arguments:
+            - @fos_user.user_manager
+            - []
+
+    im0rtality_cold_breeze.authenticator:
+        class:     Im0rtality\ColdBreezeBundle\Security\Authenticator
+        arguments:
+            - @im0rtality_cold_breeze.user_provider
+
+    im0rtality_cold_breeze.token_manager:
+        class:     Im0rtality\ColdBreezeBundle\Security\TokenManager
+        calls:
+            - [setEntityManager, [@doctrine.orm.default_entity_manager]]
