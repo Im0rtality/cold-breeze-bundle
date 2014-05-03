@@ -49,7 +49,10 @@ class Authenticator implements SimplePreAuthenticatorInterface, AuthenticationFa
 
         // set the only URL where we should look for auth information
         // and only return the token if we're at that URL
-        $publicUrls = ['/coldbreeze/token'];
+        $publicUrls = [
+            '/coldbreeze/token',
+            '/coldbreeze/version',
+        ];
 
         if ((new ArrayCollection($publicUrls))->map($checkRequestPath)->filter($truthy)->count() == 1) {
             return new PreAuthenticatedToken(self::TOKEN_NAME_PUBLIC, null, $providerKey);
