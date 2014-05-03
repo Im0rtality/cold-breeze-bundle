@@ -5,7 +5,6 @@ namespace Im0rtality\ColdBreezeBundle;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
-use Underscore\Underscore;
 
 class ExceptionListener
 {
@@ -26,11 +25,12 @@ class ExceptionListener
         ];
         if ($this->debug) {
             $debug = [
-                'trace' => Underscore::from($exception->getTrace())->map(
+                'trace' => array_map(
                     function ($entry) {
                         return sprintf('%s:%d', $entry['file'], $entry['line']);
-                    }
-                )->toArray()
+                    },
+                    $exception->getTrace()
+                )
             ];
         } else {
             $debug = [];
