@@ -5,13 +5,42 @@ namespace Im0rtality\ColdBreezeBundle\Controller;
 use Im0rtality\ColdBreezeBundle\Helper\Settings;
 use Im0rtality\ColdBreezeBundle\Helper\Version;
 use Im0rtality\ColdBreezeBundle\Serializer;
+use Sylius\Component\Core\Model\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Encoder\EncoderFactory;
 
 class RestController extends Controller
 {
+    protected function getUserManager()
+    {
+        return $this->get('fos_user.user_manager');
+    }
+
+    protected function checkUserPassword(User $user, $password)
+    {
+        /** @var EncoderFactory $factory */
+        $factory = $this->get('security.encoder_factory');
+        $encoder = $factory->getEncoder($user);
+        if (!$encoder) {
+            return false;
+        }
+        return $encoder->isPasswordValid($user->getPassword(), $password, $user->getSalt());
+    }
+
+    protected function loginUser(User $user)
+    {
+        $security    = $this->get('security.context');
+        $providerKey = $this->container->getParameter('fos_user.firewall_name');
+        $roles       = $user->getRoles();
+        $token       = new UsernamePasswordToken($user, null, $providerKey, $roles);
+        $security->setToken($token);
+    }
+
     /**
      * @param Request    $request
      * @param string     $resource
@@ -21,6 +50,8 @@ class RestController extends Controller
      */
     public function getAction(Request $request, $resource, $id)
     {
+        $this->checkAuth($request);
+
         $repository = $this->getRepository($resource);
 
         /** @var Serializer $serializer */
@@ -93,5 +124,26 @@ class RestController extends Controller
     {
         $expand = explode(',', $request->get('expand', ''));
         return $expand;
+    }
+
+    private function checkAuth(Request $request)
+    {
+        $auth = $request->headers->get('Authenticate', null);
+        if (!$auth) {
+            throw new HttpException(403);
+        }
+        list($username, $password) = explode(':', base64_decode($auth));
+        $um   = $this->getUserManager();
+        $user = $um->findUserByUsername($username);
+        if (!$user) {
+            $user = $um->findUserByEmail($username);
+        }
+
+        if (!$user instanceof User) {
+            throw new HttpException(403, "User not found");
+        }
+        if (!$this->checkUserPassword($user, $password)) {
+            throw new HttpException(403, "Wrong password");
+        }
     }
 } 
