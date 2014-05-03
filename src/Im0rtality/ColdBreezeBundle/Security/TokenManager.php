@@ -29,10 +29,12 @@ class TokenManager
         $entry = $repo->findOneBy(['user' => $user]);
         if ($entry) {
             $entry->setValue($token);
+            $entry->setShown(false);
         } else {
             $entry = new Token();
             $entry->setValue($token);
             $entry->setUser($user);
+            $entry->setShown(false);
         }
 
         $this->em->persist($entry);
