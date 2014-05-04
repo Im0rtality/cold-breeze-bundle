@@ -32,11 +32,11 @@ class Settings
     {
         $settings['filters'] = array_keys($this->imagineFilters);
         $settings['baseUrl'] = str_replace(
-            [$settings['filters'][0], 'foo', '//'],
+            [$settings['filters'][0], 'foo', '/'],
             ['', '', ''],
             $this->imagineCacheManager->generateUrl('foo', $settings['filters'][0])
         );
-        $settings['baseUrl'] = preg_replace("/^\/?app(.*).php\//", "", $settings['baseUrl']);
+        $settings['baseUrl'] = preg_replace("/^app.*.php\//", "", $settings['baseUrl']);
         return $settings;
     }
 } 
