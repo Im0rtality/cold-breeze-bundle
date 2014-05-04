@@ -36,7 +36,7 @@ class Settings
             ['', '', ''],
             $this->imagineCacheManager->generateUrl('foo', $settings['filters'][0])
         );
-        $settings['baseUrl'] = preg_replace("/^\/?app(_.*).php\//", "", $settings['baseUrl']);
+        $settings['baseUrl'] = preg_replace("/^\/?app(.*).php\//", "", $settings['baseUrl']);
         return $settings;
     }
 } 
