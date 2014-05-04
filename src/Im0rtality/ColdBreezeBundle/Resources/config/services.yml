@@ -30,9 +30,11 @@ parameters:
                 - id
                 - firstName
                 - lastName
-                - username
                 - email
                 - orders
+                - deleted
+                - locked
+                - lastLogin
             expand: []
         Address:
             fields:
