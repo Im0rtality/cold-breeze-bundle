@@ -90,6 +90,8 @@ class RestController extends Controller
         $helper = $this->get('im0rtality_cold_breeze.helper.settings');
         $data   = [
             'imagine' => $helper->getImagineSettings(),
+            'currency' => $helper->getCurrency()
+
         ];
         return new JsonResponse($data);
     }

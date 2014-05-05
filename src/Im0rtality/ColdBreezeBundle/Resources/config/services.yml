@@ -104,6 +104,7 @@ services:
         calls:
             - [setImagineFilters, [%liip_imagine.filter_sets%]]
             - [setImagineCacheManager, [@liip_imagine.cache.manager]]
+            - [setSettingsManager, [@sylius.settings.manager]]
 
     im0rtality_cold_breeze.helper.version:
         class: Im0rtality\ColdBreezeBundle\Helper\Version
@@ -126,3 +127,4 @@ services:
         class:     Im0rtality\ColdBreezeBundle\Security\TokenManager
         calls:
             - [setEntityManager, [@doctrine.orm.default_entity_manager]]
+
