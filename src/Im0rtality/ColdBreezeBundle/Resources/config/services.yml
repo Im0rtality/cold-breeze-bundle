@@ -108,6 +108,9 @@ services:
 
     im0rtality_cold_breeze.helper.statistics:
         class: Im0rtality\ColdBreezeBundle\Helper\Statistics
+        calls:
+            - [setOrderRepository, [@sylius.repository.order]]
+            - [setUserRepository, [@sylius.repository.user]]
 
     im0rtality_cold_breeze.helper.version:
         class: Im0rtality\ColdBreezeBundle\Helper\Version
