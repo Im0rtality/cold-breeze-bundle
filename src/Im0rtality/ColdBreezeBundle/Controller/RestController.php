@@ -3,6 +3,7 @@
 namespace Im0rtality\ColdBreezeBundle\Controller;
 
 use Im0rtality\ColdBreezeBundle\Helper\Settings;
+use Im0rtality\ColdBreezeBundle\Helper\Statistics;
 use Im0rtality\ColdBreezeBundle\Helper\Version;
 use Im0rtality\ColdBreezeBundle\Serializer;
 use Sylius\Component\Core\Model\User;
@@ -15,31 +16,6 @@ use Symfony\Component\Security\Core\Encoder\EncoderFactory;
 
 class RestController extends Controller
 {
-    protected function getUserManager()
-    {
-        return $this->get('fos_user.user_manager');
-    }
-
-    protected function checkUserPassword(User $user, $password)
-    {
-        /** @var EncoderFactory $factory */
-        $factory = $this->get('security.encoder_factory');
-        $encoder = $factory->getEncoder($user);
-        if (!$encoder) {
-            return false;
-        }
-        return $encoder->isPasswordValid($user->getPassword(), $password, $user->getSalt());
-    }
-
-    protected function loginUser(User $user)
-    {
-        $security    = $this->get('security.context');
-        $providerKey = $this->container->getParameter('fos_user.firewall_name');
-        $roles       = $user->getRoles();
-        $token       = new UsernamePasswordToken($user, null, $providerKey, $roles);
-        $security->setToken($token);
-    }
-
     /**
      * @param Request    $request
      * @param string     $resource
@@ -93,6 +69,14 @@ class RestController extends Controller
             'currency' => $helper->getCurrency()
 
         ];
+        return new JsonResponse($data);
+    }
+
+    public function statisticsAction()
+    {
+        /** @var Statistics $helper */
+        $helper = $this->get('im0rtality_cold_breeze.helper.statistics');
+        $data   = [$helper->getStatisticalData()];
         return new JsonResponse($data);
     }
 

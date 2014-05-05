@@ -106,6 +106,9 @@ services:
             - [setImagineCacheManager, [@liip_imagine.cache.manager]]
             - [setSettingsManager, [@sylius.settings.manager]]
 
+    im0rtality_cold_breeze.helper.statistics:
+        class: Im0rtality\ColdBreezeBundle\Helper\Statistics
+
     im0rtality_cold_breeze.helper.version:
         class: Im0rtality\ColdBreezeBundle\Helper\Version
 
