@@ -6,13 +6,11 @@ use Im0rtality\ColdBreezeBundle\Helper\Settings;
 use Im0rtality\ColdBreezeBundle\Helper\Statistics;
 use Im0rtality\ColdBreezeBundle\Helper\Version;
 use Im0rtality\ColdBreezeBundle\Serializer;
-use Sylius\Component\Core\Model\User;
+use Sylius\Bundle\ResourceBundle\Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\Encoder\EncoderFactory;
 
 class RestController extends Controller
 {
@@ -53,9 +51,19 @@ class RestController extends Controller
         $serializer = $this->get('im0rtality_cold_breeze.serializer');
         $serializer->setExpands($this->getExpands($request));
 
+        $limit  = $request->query->get('limit', 10);
+        $offset = $request->query->get('offset', 0);
+
+        $orderBy = $request->query->get('orderBy', null);
+        if (null != $orderBy) {
+            $orderBy = [
+                $orderBy => $request->query->get('order', 'ASC')
+            ];
+        }
+
         return new JsonResponse(
             $serializer->serialize(
-                $repository->findBy([], null, $request->query->get('limit', 10), $request->query->get('offset', 0))
+                $repository->findBy([], $orderBy, $limit, $offset)
             )
         );
     }
@@ -65,7 +73,7 @@ class RestController extends Controller
         /** @var Settings $helper */
         $helper = $this->get('im0rtality_cold_breeze.helper.settings');
         $data   = [
-            'imagine' => $helper->getImagineSettings(),
+            'imagine'  => $helper->getImagineSettings(),
             'currency' => $helper->getCurrency()
 
         ];
@@ -96,7 +104,7 @@ class RestController extends Controller
 
     /**
      * @param $resource
-     * @return object
+     * @return EntityRepository
      */
     protected function getRepository($resource)
     {
