@@ -2,8 +2,8 @@
 
 namespace Im0rtality\ColdBreezeBundle;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Sylius\Component\Core\Model\User;
 
 class Serializer
 {
@@ -33,7 +33,7 @@ class Serializer
     }
 
     /**
-     * @param User $object
+     * @param $object
      * @return array
      */
     public function serialize($object)
@@ -86,10 +86,13 @@ class Serializer
             $value = $object->{$getter}();
             if ($value instanceof \DateTime) {
                 $output[$field] = $value->format('c');
-            } elseif ($value instanceof Collection) {
+            } elseif ((is_array($value)) || ($value instanceof Collection)) {
                 if (in_array($field, $expand)) {
                     $output[$field] = $this->serializeCollection($value);
                 } else {
+                    if (!($value instanceof Collection)) {
+                        $value = new ArrayCollection($value);
+                    }
                     $output[$field] = $value
                         ->map(
                             function ($item) {
