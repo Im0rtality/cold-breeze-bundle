@@ -13,6 +13,8 @@ class Serializer
     protected $mapping = [];
     /** @var array|null */
     protected $fields;
+    /** @var  string[] */
+    protected $ignore;
 
     /**
      * @param array $expands
@@ -36,6 +38,10 @@ class Serializer
      */
     public function serialize($object)
     {
+        if (null === $this->ignore) {
+            $this->ignore = $this->mapping[current(array_reverse(explode('\\', get_class($object))))]['ignore'];
+        }
+
         if ((is_array($object)) || ($object instanceof Collection)) {
             return $this->serializeCollection($object);
         } else {
@@ -68,6 +74,7 @@ class Serializer
         $expand = $this->mapping[current(array_reverse(explode('\\', get_class($object))))]['expand'];
 
         $expand += $this->expands;
+        $fields = array_diff($fields, $this->ignore);
 
         $output = array_flip($fields);
         foreach ($fields as $field) {
@@ -75,7 +82,7 @@ class Serializer
             if (!is_callable([$object, $getter])) {
                 $getter = sprintf('is%s', ucfirst($field));
             }
-            $value  = $object->{$getter}();
+            $value = $object->{$getter}();
             if ($value instanceof \DateTime) {
                 $output[$field] = $value->format('c');
             } elseif ($value instanceof Collection) {
