@@ -22,9 +22,29 @@ parameters:
                 - createdAt
                 - updatedAt
                 - completedAt
+                - items
             expand:
                 - shippingAddress
                 - billingAddress
+                - items
+            ignore:
+                - variants
+                - masterVariant
+                - onHold
+                - onHand
+                - availableOnDemand
+                - availableOn
+                - available
+        OrderItem:
+            fields:
+                - product
+                - variant
+                - quantity
+                - unitPrice
+                - total
+            expand:
+                - variant
+                - product
         User:
             fields:
                 - id
@@ -83,7 +103,7 @@ parameters:
         OptionValue:
             fields:
                 - value
-                - name
+                - presentation
             expand: []
 
 services:
