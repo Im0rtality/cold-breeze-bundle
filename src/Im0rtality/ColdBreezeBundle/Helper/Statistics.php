@@ -22,18 +22,14 @@ class Statistics
         $startDate = new \DateTime('-30 days');
 
         $orders = $this->orderRepository->findBetweenDates($startDate, $endDate);
-        $users  = $this->userRepository
-            ->createQueryBuilder('u')
-            ->where('u.lastLogin >= :lastLogin')
-            ->setParameter('lastLogin', $startDate)
-            ->getQuery()
-            ->getResult();
+        $users = $this->getUsers($startDate);
 
-        $revenue = function ($sum, Order $value) {
+        $revenue = function ($sum, $value) {
+            /** @var $value Order */
             return $sum + $value->getTotal();
         };
 
-        $stats                         = ['title' => 'month'];
+        $stats                         = [];
         $stats['activeUsers']          = count($users);
         $stats['orders']               = count($orders);
         $stats['revenue']              = array_reduce($orders, $revenue, 0);
@@ -54,9 +50,26 @@ class Statistics
 
     /**
      * @param UserRepository $userRepository
+     * @codeCoverageIgnore
      */
     public function setUserRepository($userRepository)
     {
         $this->userRepository = $userRepository;
+    }
+
+    /**
+     * @param $startDate
+     * @return array
+     * @codeCoverageIgnore
+     */
+    protected function getUsers($startDate)
+    {
+        $users = $this->userRepository
+            ->createQueryBuilder('u')
+            ->where('u.lastLogin >= :lastLogin')
+            ->setParameter('lastLogin', $startDate)
+            ->getQuery()
+            ->getResult();
+        return $users;
     }
 }

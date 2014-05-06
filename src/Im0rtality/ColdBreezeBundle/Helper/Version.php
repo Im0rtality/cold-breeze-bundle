@@ -8,6 +8,7 @@ class Version
 
     /**
      * @return string
+     * @codeCoverageIgnore
      */
     public function getVersion()
     {
