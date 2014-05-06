@@ -1,5 +1,7 @@
 # Cold Breeze backend bundle
 
+[![Build Status](https://travis-ci.org/Im0rtality/cold-breeze-bundle.svg?branch=master)](https://travis-ci.org/Im0rtality/cold-breeze-bundle)
+
 Sylius integration bundle for Cold Breeze app
 
 # Installation
