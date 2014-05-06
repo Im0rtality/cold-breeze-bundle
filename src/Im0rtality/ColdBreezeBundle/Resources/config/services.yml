@@ -35,6 +35,7 @@ parameters:
                 - availableOnDemand
                 - availableOn
                 - available
+                - price
         OrderItem:
             fields:
                 - product
