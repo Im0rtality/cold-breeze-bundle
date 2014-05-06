@@ -38,10 +38,6 @@ class Serializer
      */
     public function serialize($object)
     {
-        if (null === $this->ignore) {
-            $this->ignore = $this->mapping[current(array_reverse(explode('\\', get_class($object))))]['ignore'];
-        }
-
         if ((is_array($object)) || ($object instanceof Collection)) {
             return $this->serializeCollection($object);
         } else {
@@ -70,8 +66,13 @@ class Serializer
      */
     private function serializeInstance($object)
     {
-        $fields = $this->mapping[current(array_reverse(explode('\\', get_class($object))))]['fields'];
-        $expand = $this->mapping[current(array_reverse(explode('\\', get_class($object))))]['expand'];
+        $class = current(array_reverse(explode('\\', get_class($object))));
+        if (null === $this->ignore) {
+            $this->ignore = @$this->mapping[$class]['ignore'] ? : [];
+        }
+
+        $fields = $this->mapping[$class]['fields'];
+        $expand = $this->mapping[$class]['expand'];
 
         $expand += $this->expands;
         $fields = array_diff($fields, $this->ignore);
