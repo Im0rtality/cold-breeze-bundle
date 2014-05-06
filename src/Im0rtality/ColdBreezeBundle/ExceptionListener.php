@@ -6,6 +6,10 @@ use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 
+/**
+ * This is for prettier formatting only. App cares about proper HTTP code only
+ * @codeCoverageIgnore
+ */
 class ExceptionListener
 {
     /** @var  bool */

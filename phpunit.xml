@@ -23,10 +23,13 @@
         <whitelist>
             <directory>src/Im0rtality/ColdbreezeBundle/</directory>
             <exclude>
+                <directory>src/Im0rtality/ColdbreezeBundle/DependencyInjection</directory>
                 <directory>src/Im0rtality/ColdbreezeBundle/Resources</directory>
                 <directory>src/Im0rtality/ColdbreezeBundle/Tests</directory>
                 <directory>src/Im0rtality/ColdbreezeBundle/Controller</directory>
                 <directory>src/Im0rtality/ColdbreezeBundle/Command</directory>
+                <directory>src/Im0rtality/ColdbreezeBundle/Entity</directory>
+                <directory>src/Im0rtality/ColdbreezeBundle/Security</directory>
             </exclude>
         </whitelist>
     </filter>
