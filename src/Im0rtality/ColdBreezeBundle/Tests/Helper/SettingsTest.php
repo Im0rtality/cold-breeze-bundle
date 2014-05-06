@@ -1,6 +1,6 @@
 <?php
 
-namespace src\Im0rtality\ColdBreezeBundle\Tests\Helper;
+namespace Im0rtality\ColdBreezeBundle\Tests\Helper;
 
 use Im0rtality\ColdBreezeBundle\Helper\Settings;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
