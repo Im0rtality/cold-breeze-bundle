@@ -15,9 +15,21 @@
 
     <testsuites>
         <testsuite name="ColdbreezeBundle">
-            <directory suffix="Test.php">./Tests</directory>
+            <directory>src/Im0rtality/ColdbreezeBundle/Tests</directory>
         </testsuite>
     </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory>src/Im0rtality/ColdbreezeBundle/</directory>
+            <exclude>
+                <directory>src/Im0rtality/ColdbreezeBundle/Resources</directory>
+                <directory>src/Im0rtality/ColdbreezeBundle/Tests</directory>
+                <directory>src/Im0rtality/ColdbreezeBundle/Controller</directory>
+                <directory>src/Im0rtality/ColdbreezeBundle/Command</directory>
+            </exclude>
+        </whitelist>
+    </filter>
 
     <logging>
         <log type="coverage-html" target="build/coverage" title="Coverage" charset="UTF-8" yui="true" highlight="true" lowUpperBound="35" highLowerBound="70"/>
